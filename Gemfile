@@ -36,3 +36,12 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem 'authlogic'
+
+# Unit testing
+group :test, :development do
+	gem 'rspec-rails', '2.11.0'
+	gem 'forgery', '0.5.0'
+	gem 'shoulda-matchers', '1.2.0'
+end
