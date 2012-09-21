@@ -1,4 +1,30 @@
 KokaratMe::Application.routes.draw do
+
+  get "microposts/index"
+
+  get "user_sessions/new"
+
+    #!get "users/index"
+
+    #!get "users/show"
+
+    #!get "users/new"
+
+    #!get "users/edit"
+
+    resources :relationships, :only => [:create, :destroy]
+    resources :microposts, :only => [:index, :create, :destroy]
+
+    resources :users, :except => [:destroy]
+    resources :user_sessions, :only => [:new, :create, :destroy]
+
+    match "login" => "user_sessions#new"
+    match "logout" => "user_sessions#destroy"
+
+    #! index (public)
+    #! root :to => "users#index"
+    root :to => "microposts#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

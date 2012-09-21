@@ -1,0 +1,28 @@
+<% if current_user %>
+	<div class="user-information">
+	<span class="user-name"><%= current_user.name %></span>
+		<%= form_for @micropost do |f| %>
+			<%= render :partial => "shared/form_error_message", :locals =>{:model_object =>
+			@micropost} %>
+			<%= f.text_area :content, :placeholder => "Post something here." %>
+			<%= f.submit "Post" %>
+			<% end %>
+		</div>
+
+	<div class="user-post">
+	<h2>Feed</h2>
+		<% if current_user.feed.empty? %>
+		<p class="none">Not have any post yet.</p>
+			<% else %>
+				<% current_user.feed.each do |post| %>
+					<div class="post">
+						<p class="post-owner"><%= link_to post.user.name,user_url(post.user_id)
+					%></p>
+				<%= render :partial => "post_body", :locals => {:post =>post} %>
+			</div>
+		<% end %>
+	<% end %>
+	</div>
+		<% else %>
+	  		<p class="none"><%= link_to "Please login first..",login_url%></p>
+<% end %>

@@ -1,0 +1,18 @@
+<div class="user-information">
+	<span class="user-name"><%= @user.name %></span>
+	<%= @user.email %>
+	<%= render :partial => "stats", :locals => {:user => @user} %>
+</div>
+
+<div class="user-post">
+	<h2>Feed</h2>
+		<% if @user.microposts.empty? %>
+			<p class="none">Not have any post yet.</p>
+			<% else %>
+				<% @user.microposts.each do |post| %>
+			<div class="post">
+				<%= render :partial => "microposts/post_body", :locals =>{:post => post} %>
+			</div>
+		<% end %>
+	<% end %>
+</div>
