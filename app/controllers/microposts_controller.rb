@@ -1,6 +1,6 @@
 class MicropostsController < ApplicationController
   def index
-  	@micropost = Micropost.new
+  	@micropost = Micropost.new #! create ojb
   end
 
   def create
