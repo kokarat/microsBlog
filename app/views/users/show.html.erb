@@ -2,6 +2,10 @@
 	<span class="user-name"><%= @user.name %></span>
 	<%= @user.email %>
 	<%= render :partial => "stats", :locals => {:user => @user} %>
+	<% if @user.id == current_user.id %>
+	<div class="edit-profile-button"><%= link_to "Edit
+		profile",edit_user_url(current_user.id) %></div>
+	<% end %>
 </div>
 
 <div class="user-post">
