@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>KokaratMe</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+	<title>KokaratMe</title>
+	<%= stylesheet_link_tag    "application", :media => "all" %>
+	<%= javascript_include_tag "application" %>
+	<%= csrf_meta_tags %>
 </head>
 <body>
 
 	<div id="header">
 		<%= link_to "KOKARAT.ME", root_url, :class => "site-name" %>
-			<div id="navigation">
-				<% if current_user %>
-					<%= link_to current_user.name, user_url(current_user.id) %>
-					<%= link_to "All users", users_url %>
-					<%= link_to "Logout", logout_url %>
-				<% else %>
-					<%= link_to "Login", login_url %>
-					<%= link_to "Sign up", new_user_url %>
-				<% end %>
-			</div>
+		<div id="navigation">
+			<% if current_user %>
+			<%= link_to current_user.name, user_url(current_user.id) %>
+			<%= link_to "All users", users_url %>
+			<%= link_to "Logout", logout_url %>
+			<% else %>
+			<%= link_to "Login", login_url %>
+			<%= link_to "Sign up", new_user_url %>
+			<% end %>
+		</div>
 	</div>
 
-    <div id="content">
-			<% if flash[:notice] %>
-			<div class="notice-message">
-				<%= flash[:notice] %>
-			</div>
-			<% end %>
-			<%= yield %>
+	<div id="content">
+		<% if flash[:notice] %>
+		<div class="notice-message">
+			<%= flash[:notice] %>
+		</div>
+
+		<% end %>
+
+		<% if flash[:error] %>
+		<div class="error-message">
+			<%= flash[:error] %>
+		</div>
+		<% end %>
+		<%= yield %>
 	</div>
-	<% if flash[:error] %>
-	<div class="error-message">
-		<%= flash[:error] %>
-	</div>
-	<% end %>
+
 </body>
 </html>
