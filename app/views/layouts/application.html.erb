@@ -30,6 +30,10 @@
 			<% end %>
 			<%= yield %>
 	</div>
-
+	<% if flash[:error] %>
+	<div class="error-message">
+		<%= flash[:error] %>
+	</div>
+	<% end %>
 </body>
 </html>

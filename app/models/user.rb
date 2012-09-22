@@ -9,9 +9,24 @@ class User < ActiveRecord::Base
 	has_many :following_users, :through => :relationships, :source => :followed
 
 	has_many :reverse_relations, :class_name => "Relationship", :foreign_key => :followed_id
-    has_many :follower_users, :through => :reverse_relations, :source => :follower
+	has_many :follower_users, :through => :reverse_relations, :source => :follower
 
 	def feed
-		microposts
+		#microposts
+		monitored_user_id = following_users.map(&:id) << self.id
+		Micropost.where(:user_id => monitored_user_id)
+	end
+
+	def following?(user_id)
+		relationships.find_by_followed_id(user_id)
+	end
+
+	#following?
+	def follow(user_id)
+		relationships.create(:followed_id => user_id)
+	end
+
+	def unfollow(user_id)
+		relationships.find_by_followed_id(user_id).destroy
 	end
 end

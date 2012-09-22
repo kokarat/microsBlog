@@ -3,20 +3,37 @@
 	<%= @user.email %>
 	<%= render :partial => "stats", :locals => {:user => @user} %>
 	<% if @user.id == current_user.id %>
-	<div class="edit-profile-button"><%= link_to "Edit
-		profile",edit_user_url(current_user.id) %></div>
+	<div class="edit-profile-button"><%= link_to "Edit profile",edit_profile_url%></div>
+	<% else %>
+	<% if current_user.following?(@user.id) %>
+	<div class="unfollow-button">
+		<%= form_for current_user.relationships.find_by_followed_id(@user), :html =>
+		{:method => :delete} do |f| %>
+		<%= f.hidden_field :followed_id %>
+		<%= f.submit "Unfollow" %>
+		<% end %>
+	</div>
+	<% else %>
+	<div class="follow-button">
+		<%= form_for @relationship do |f| %>
+		<%= f.hidden_field :followed_id, :value => @user.id %>
+		<%= f.submit "Follow" %>
+		<% end %>
+	</div>
+	<% end %>
+
 	<% end %>
 </div>
 
 <div class="user-post">
 	<h2>Feed</h2>
-		<% if @user.microposts.empty? %>
-			<p class="none">Not have any post yet.</p>
-			<% else %>
-				<% @user.microposts.each do |post| %>
-			<div class="post">
-				<%= render :partial => "microposts/post_body", :locals =>{:post => post} %>
-			</div>
-		<% end %>
+	<% if @user.microposts.empty? %>
+	<p class="none">Not have any post yet.</p>
+	<% else %>
+	<% @user.microposts.each do |post| %>
+	<div class="post">
+		<%= render :partial => "microposts/post_body", :locals =>{:post => post} %>
+	</div>
+	<% end %>
 	<% end %>
 </div>

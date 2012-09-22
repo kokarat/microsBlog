@@ -14,12 +14,16 @@ KokaratMe::Application.routes.draw do
 
     resources :relationships, :only => [:create, :destroy]
     resources :microposts, :only => [:index, :create, :destroy]
-
-    resources :users, :except => [:destroy]
     resources :user_sessions, :only => [:new, :create, :destroy]
+    resources :users, :except => [:destroy]do
+    member do
+      get :follower, :following
+    end
+  end
 
-    match "login" => "user_sessions#new"
-    match "logout" => "user_sessions#destroy"
+  match "login" => "user_sessions#new"
+  match "logout" => "user_sessions#destroy"
+  match "edit_profile" => "users#edit"
 
     #! index (public)
     #! root :to => "users#index"
