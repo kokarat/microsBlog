@@ -1,4 +1,5 @@
 class MicropostsController < ApplicationController
+	before_filter :require_login
   def index
   	@micropost = Micropost.new #! create ojb
   end
